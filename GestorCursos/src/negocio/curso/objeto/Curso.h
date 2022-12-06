@@ -25,8 +25,8 @@ private:
 	std::string descripcion_ = "";
 	std::list<std::string> ponentes_ = {};
 	std::list<std::string> usuarios_ = {};
-	clock_t fechaInicio_ = 0;
-	clock_t fechaFinal_ = 0;
+	std::string fechaInicio_ = 0;
+	std::string fechaFinal_ = 0;
 	bool estado_ = false;
 	int numeroAlumnos_ = 0;
 	int aforo_ = 0;
@@ -35,7 +35,7 @@ private:
 
 public:
 	Curso() = default;
-	Curso(int idCurso,std::string nombre,std::string descripcion,std::list<std::string> ponentes, std::list<std::string> usuarios,clock_t fechaInicio ,clock_t fechaFinal,bool estado,int numeroAlumnos,int aforo){
+	Curso(int idCurso,std::string nombre,std::string descripcion,std::list<std::string> ponentes, std::list<std::string> usuarios,std::string fechaInicio ,std::string fechaFinal,bool estado,int numeroAlumnos,int aforo){
 		idCurso_ = idCurso;
 		nombre_ = nombre;
 		descripcion_ = descripcion;
@@ -75,19 +75,19 @@ public:
 		estado_ = estado;
 	}
 
-	clock_t getFechaFinal() const {
+	std::string getFechaFinal() const {
 		return fechaFinal_;
 	}
 
-	void setFechaFinal(clock_t fechaFinal) {
+	void setFechaFinal(std::string fechaFinal) {
 		fechaFinal_ = fechaFinal;
 	}
 
-	clock_t getFechaInicio() const {
+	std::string getFechaInicio() const {
 		return fechaInicio_;
 	}
 
-	void setFechaInicio(clock_t fechaInicio) {
+	void setFechaInicio(std::string fechaInicio) {
 		fechaInicio_ = fechaInicio;
 	}
 
