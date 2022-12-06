@@ -20,21 +20,22 @@
 class Curso {
 
 private:
-	long idCurso_;
-	std::string nombre_;
-	std::string descripcion_;
-	std::list<Ponente> ponentes_;
-	std::list<Usuario> usuarios_;
-	clock_t fechaInicio_;
-	clock_t fechaFinal_;
-	bool estado_;
-	int numeroAlumnos_;
-	int aforo_;
+	long idCurso_ = 0;
+	std::string nombre_ = "";
+	std::string descripcion_ = "";
+	std::list<std::string> ponentes_ = {};
+	std::list<std::string> usuarios_ = {};
+	clock_t fechaInicio_ = 0;
+	clock_t fechaFinal_ = 0;
+	bool estado_ = false;
+	int numeroAlumnos_ = 0;
+	int aforo_ = 0;
 
 
 
 public:
-	Curso(int idCurso,std::string nombre,std::string descripcion,std::list<Ponente> ponentes, std::list<Usuario> usuarios,clock_t fechaInicio ,clock_t fechaFinal,bool estado,int numeroAlumnos,int aforo){
+	Curso() = default;
+	Curso(int idCurso,std::string nombre,std::string descripcion,std::list<std::string> ponentes, std::list<std::string> usuarios,clock_t fechaInicio ,clock_t fechaFinal,bool estado,int numeroAlumnos,int aforo){
 		idCurso_ = idCurso;
 		nombre_ = nombre;
 		descripcion_ = descripcion;
@@ -46,9 +47,8 @@ public:
 		aforo_ = aforo;
 		usuarios_ = usuarios;
 
-	}
+	};
 
-	virtual ~Curso();
 
 
 	int getAforo() const {
@@ -115,30 +115,30 @@ public:
 		numeroAlumnos_ = numeroAlumnos;
 	}
 
-	const std::list<Ponente>& getPonentes() const {
+	const std::list<std::string>& getPonentes() const {
 		return ponentes_;
 	}
 
-	void setPonentes(const std::list<Ponente> &ponentes) {
+	void setPonentes(const std::list<std::string> &ponentes) {
 		ponentes_ = ponentes;
 	}
 
-	const std::list<Usuario>& getUsuarios() const {
+	const std::list<std::string>& getUsuarios() const {
 			return usuarios_;
 		}
 
-	void setUsuarios(const std::list<Usuario> &usuarios) {
+	void setUsuarios(const std::list<std::string> &usuarios) {
 		usuarios_ = usuarios;
 	}
 
-	void darDeAlta(int idCurso);
-	void darDeBaja(int idCurso);
-	void editarCurso(int idCurso);
-	void inscribirAlumno(int idCurso, int idUsuario);
-	void borrarInscripcion(int idCurso, int idUsuario);
-	std::list<Curso> verMisCursos(int idUsuario);
-	void asignarPonentes(int idCurso, Ponente Ponente);
-	void quitarPonentes(int idCurso, int idPonente);
+	bool darDeAlta(Curso curso);
+	bool darDeBaja(int idCurso);
+	bool editarCurso(Curso curso);
+	bool inscribirAlumno(int idCurso, std::string idUsuario);
+	bool borrarInscripcion(int idCurso, std::string idUsuario);
+	std::list<Curso> verMisCursos(std::string idUsuario);
+	bool asignarPonentes(int idCurso, std::string Ponente);
+	bool quitarPonentes(int idCurso, std::string idPonente);
 
 
 
