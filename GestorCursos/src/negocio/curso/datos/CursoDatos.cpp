@@ -144,10 +144,10 @@ Curso CursoDatos::buscar(int idCurso) {
 				else curso.setEstado(false);
 				getline(fichero, lineaFichero);
 				lineaFichero = lineaFichero.substr(lineaFichero.find(":"));
-				curso.setNumeroAlumnos((int)lineaFichero);
+				curso.setNumeroAlumnos(std::stoi(lineaFichero));
 				getline(fichero, lineaFichero);
 				lineaFichero = lineaFichero.substr(lineaFichero.find(":"));
-				curso.setAforo((int)lineaFichero);
+				curso.setAforo(std::stoi(lineaFichero));
 				getline(fichero, lineaFichero);
 				lineaFichero = lineaFichero.substr(lineaFichero.find("["),lineaFichero.find("]"));
 				curso.setPonentes(split(lineaFichero, ","));
@@ -190,10 +190,10 @@ std::list<Curso> CursoDatos::lectura(){
 		else cursoAux.setEstado(false);
 		getline(fichero, lineaFichero);
 		lineaFichero = lineaFichero.substr(lineaFichero.find(":"));
-		cursoAux.setNumeroAlumnos((int)lineaFichero);
+		cursoAux.setNumeroAlumnos(std::stoi(lineaFichero));
 		getline(fichero, lineaFichero);
 		lineaFichero = lineaFichero.substr(lineaFichero.find(":"));
-		cursoAux.setAforo((int)lineaFichero);
+		cursoAux.setAforo(std::stoi(lineaFichero));
 		getline(fichero, lineaFichero);
 		lineaFichero = lineaFichero.substr(lineaFichero.find("["),lineaFichero.find("]"));
 		cursoAux.setPonentes(split(lineaFichero, ","));

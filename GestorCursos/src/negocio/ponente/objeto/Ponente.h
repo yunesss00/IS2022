@@ -9,15 +9,14 @@
 #define NEGOCIO_PONENTE_PONENTE_H_
 #include <iostream>
 #include <cstdlib>
-#include "../enum/TipoPonente.cpp"
 
 class Ponente {
 private:
 	std::string dni_;
 	std::string nombre_;
-	TipoPonente tipoPonente_;
+	std::string tipoPonente_;
 public:
-	Ponente(std::string dni, std::string nombre,TipoPonente tipoPonente){
+	Ponente(std::string dni, std::string nombre,std::string tipoPonente){
 		dni_ = dni;
 		nombre_ = nombre;
 		tipoPonente_ = tipoPonente;
@@ -42,11 +41,11 @@ public:
 		nombre_ = nombre;
 	}
 
-	TipoPonente getTipoPonente() const {
+	std::string getTipoPonente() const {
 		return tipoPonente_;
 	}
 
-	void setTipoPonente(TipoPonente tipoPonente) {
+	void setTipoPonente(std::string tipoPonente) {
 		tipoPonente_ = tipoPonente;
 	}
 

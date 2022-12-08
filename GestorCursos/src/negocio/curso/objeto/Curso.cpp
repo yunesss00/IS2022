@@ -22,8 +22,11 @@ CursoDatos cursoDatos;
 
 
 bool Curso::darDeAlta(Curso curso){
-	if (cursoDatos.insertar(curso)) return true;
-	else return false;
+	if(!cursoDatos.existeCurso(curso.getIdCurso())) {
+		if (cursoDatos.insertar(curso)) return true;
+		return false;
+	}else return false;
+
 }
 
 
@@ -32,14 +35,17 @@ bool Curso::darDeBaja(int idCurso){
 	if(cursoDatos.existeCurso(idCurso)) {
 		Curso curso = cursoDatos.buscar(idCurso);
 		curso.setEstado(false);
-		cursoDatos.modificar(curso);
+		if (cursoDatos.modificar(curso)) return true;
+		return false;
 	}
 	return false;
 }
 
 bool Curso::editarCurso(Curso curso){
-	if (cursoDatos.modificar(curso)) return true;
-			else return false;
+	if (!cursoDatos.existeCurso(curso.getIdCurso())) {
+		if (cursoDatos.modificar(curso)) return true;
+		else return false;
+	}else return false;
 }
 
 bool Curso::inscribirAlumno(int idCurso, std::string idUsuario){
