@@ -17,6 +17,7 @@
 
 static std::string NOMBRE_FICHERO_CURSOS = "Cursos.txt";
 static std::string NOMBRE_FICHERO_AUXILIAR = "FicheroAuxiliar.txt";
+
 static std::string IDCURSO = "IDCURSO:";
 static std::string NOMBRE = "NOMBRE:";
 static std::string DESCRIPCION = "DESCRIPCION:";
@@ -27,6 +28,9 @@ static std::string NUMEROALUMNOS = "NUMEROALUMNOS:";
 static std::string AFORO = "AFORO:";
 static std::string PONENTES = "PONENTES:";
 static std::string USUARIOS = "USUARIOS:";
+
+static std::string ACTIVO = "ACTIVO";
+static std::string CADUCADO = "CADUCADO";
 
 
 CursoDatos::CursoDatos() {
@@ -61,8 +65,8 @@ bool CursoDatos::insertar(Curso curso){
 		fichero<<FECHAINICIO<<curso.getFechaInicio()<<"\n";
 		fichero<<FECHAFINAL<<curso.getFechaFinal()<<"\n";
 		std::string estado;
-		if (curso.isEstado()) estado = "Activo";
-		else estado = "Caducado";
+		if (curso.isEstado()) estado = ACTIVO;
+		else estado = CADUCADO;
 		fichero<<ESTADO<<estado<<"\n";
 		fichero<<NUMEROALUMNOS<<curso.getNumeroAlumnos()<<"\n";
 		fichero<<AFORO<<curso.getAforo()<<"\n";
@@ -93,7 +97,7 @@ bool CursoDatos::insertar(Curso curso){
 	return true;
 }
 
-bool existeCurso(int idCurso) {
+bool CursoDatos::existeCurso(int idCurso) {
 
 	std::string lineaFichero;
 	std::string cursoBuscar = IDCURSO + std::to_string(idCurso);
@@ -122,6 +126,7 @@ Curso CursoDatos::buscar(int idCurso) {
 		while(getline(fichero, lineaFichero)){
 			if (lineaFichero==std::to_string(idCurso)) {
 				curso.setIdCurso(idCurso);
+				getline(fichero, lineaFichero);
 				lineaFichero = lineaFichero.substr(lineaFichero.find(":"));
 				curso.setNombre(lineaFichero);
 				getline(fichero, lineaFichero);
@@ -135,22 +140,20 @@ Curso CursoDatos::buscar(int idCurso) {
 				curso.setFechaFinal(lineaFichero);
 				getline(fichero, lineaFichero);
 				lineaFichero = lineaFichero.substr(lineaFichero.find(":"));
-				curso.setFechaFinal(lineaFichero);
+				if(lineaFichero==ACTIVO)curso.setEstado(true);
+				else curso.setEstado(false);
 				getline(fichero, lineaFichero);
 				lineaFichero = lineaFichero.substr(lineaFichero.find(":"));
-				curso.setFechaFinal(lineaFichero);
+				curso.setNumeroAlumnos((int)lineaFichero);
 				getline(fichero, lineaFichero);
 				lineaFichero = lineaFichero.substr(lineaFichero.find(":"));
-				curso.setFechaFinal(lineaFichero);
-				getline(fichero, lineaFichero);
-				lineaFichero = lineaFichero.substr(lineaFichero.find(":"));
-				curso.setFechaFinal(lineaFichero);
+				curso.setAforo((int)lineaFichero);
 				getline(fichero, lineaFichero);
 				lineaFichero = lineaFichero.substr(lineaFichero.find("["),lineaFichero.find("]"));
 				curso.setPonentes(split(lineaFichero, ","));
 				getline(fichero, lineaFichero);
 				lineaFichero = lineaFichero.substr(lineaFichero.find("["),lineaFichero.find("]"));
-				curso.setPonentes(split(lineaFichero, ","));
+				curso.setUsuarios(split(lineaFichero, ","));
 			}
 		}
 	}
@@ -183,23 +186,20 @@ std::list<Curso> CursoDatos::lectura(){
 		cursoAux.setFechaFinal(lineaFichero);
 		getline(fichero, lineaFichero);
 		lineaFichero = lineaFichero.substr(lineaFichero.find(":"));
-		cursoAux.setFechaFinal(lineaFichero);
+		if(lineaFichero==ACTIVO)cursoAux.setEstado(true);
+		else cursoAux.setEstado(false);
 		getline(fichero, lineaFichero);
 		lineaFichero = lineaFichero.substr(lineaFichero.find(":"));
-		cursoAux.setFechaFinal(lineaFichero);
+		cursoAux.setNumeroAlumnos((int)lineaFichero);
 		getline(fichero, lineaFichero);
 		lineaFichero = lineaFichero.substr(lineaFichero.find(":"));
-		cursoAux.setFechaFinal(lineaFichero);
-		getline(fichero, lineaFichero);
-		lineaFichero = lineaFichero.substr(lineaFichero.find(":"));
-		cursoAux.setFechaFinal(lineaFichero);
+		cursoAux.setAforo((int)lineaFichero);
 		getline(fichero, lineaFichero);
 		lineaFichero = lineaFichero.substr(lineaFichero.find("["),lineaFichero.find("]"));
 		cursoAux.setPonentes(split(lineaFichero, ","));
 		getline(fichero, lineaFichero);
 		lineaFichero = lineaFichero.substr(lineaFichero.find("["),lineaFichero.find("]"));
-		cursoAux.setPonentes(split(lineaFichero, ","));
-		cursos.push_back(cursoAux);
+		cursoAux.setUsuarios(split(lineaFichero, ","));
 	}
 	fichero.close();
 	return cursos;

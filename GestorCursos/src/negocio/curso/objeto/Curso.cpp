@@ -28,8 +28,13 @@ bool Curso::darDeAlta(Curso curso){
 
 
 bool Curso::darDeBaja(int idCurso){
-	if (cursoDatos.borrar(idCurso)) return true;
-		else return false;
+	//dar de baja un curso es cambiar el estado
+	if(cursoDatos.existeCurso(idCurso)) {
+		Curso curso = cursoDatos.buscar(idCurso);
+		curso.setEstado(false);
+		cursoDatos.modificar(curso);
+	}
+	return false;
 }
 
 bool Curso::editarCurso(Curso curso){
