@@ -1,13 +1,13 @@
- include <iostream>
+#include <iostream>
 # include <string>
 # include <ctime>
 # include <iostream>
 # include <cstdlib>
 # include <cstdio>
 # include <list>
-# include "Curso.h"
-# include "Usuario.h"
-# include "CursoDatos.h"
+# include "../negocio/curso/objeto/Curso.h"
+# include "../negocio/usuario/objeto/Usuario.h"
+# include "../negocio/curso/datos/CursoDatos.h"
 
 using namespace std;
 
