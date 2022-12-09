@@ -12,41 +12,93 @@
 using namespace std;
 
 void llamada(int op){
+	Usuario user;
+	Curso cu;
+	bool cambioClave, editarCurso, darAlta, darBaja, asigPonente, quitPonente, inscribirAl, borrarIns;
+	string dniUser, claveNueva, idPonente, idUsuario, curso;
+	int idCurso, estadistica;
 	switch(op){
 	case 1:	//cambiar contraseña
-		Usuario::modificarClaveAcceso(dniUsuario, claveAcceso);
+		system("cls");
+		cout << "Introduzca su dni: ";
+		cin >> dniUser;
+		cout >> "Introduzca la nueva clave: ";
+		cin >> claveNueva;
+		cambioClave = user.modificarClaveAcceso(dniUser, claveNueva);
+		if (cambioClave) cout << "Se ha cambiado la contraseña con exito." << endl;
+		else cout << "No se ha podido modificar la contraseña" << endl;
+		system("pause");
 		break;
 
 	case 2: //buscar cursos
-		CursoDatos::buscar(idCurso);
+		CursoDatos::buscar(idCurso); //Falta ver cómo hacerlo
 		break;
 
 	case 3:	//editar curso
-		Curso::editarCurso(curso);
+		system("cls");
+		cout << "Introduzca el nombre del curso: ";
+		cin >> curso;
+		editarCurso = cu.editarCurso(curso);
+		if (editarCurso) cout << "Se ha editado el curso con exito." << endl;
+		else cout << "No se ha podido editar el curso." << endl;
+		system("pause");
 		break;
 
 	case 4:	//ver participantes
-		Usuario::verParticipantes(idCurso);
+		cu.verListadoAlumnos(idCurso); //falta sacar la lista
 		break;
 
 	case 5: //generar estadisticas
-
+		system("cls");
+		cout << "Introduzca la ID del curso: ";
+		cin >> idCurso;
+		estadistica = cu.generaEstadistica(idCurso);
+		cout << "El porcentaje de ocupacion del curso es de " << estadistica << "%" <<endl;
+		system("pause");
 		break;
 
 	case 6: //dar de alta un curso
-		Curso::darDeAlta(curso);
+		system("cls");
+		cout << "Introduzca el nombre del curso: ";
+		cin >> curso;
+		darAlta = cu.darDeAlta(curso);
+		if(darAlta) cout << "Curso creado con exito." << endl;
+		else cout << "No se ha podido crear el curso" << endl;
+		system("pause");
 		break;
 
 	case 7:	//dar de baja un curso
-		Curso::darDeBaja(idCurso);
+		system("cls");
+		cout << "Introduzca la ID del curso: ";
+		cin >> idCurso;
+		darBaja = cu.darDeBaja(idCurso);
+		if (darBaja) cout << "Se ha cambiado el estado del curso con exito." << endl;
+		else cout << "No se ha podido cambiar el estado del curso." << endl;
+		system("pause");
 		break;
 
 	case 8:	//asignar ponentes
-		Curso::asignarPonentes(idCurso, Ponente);
+		system("cls");
+		cout << "Introduzca la ID del curso: ";
+		cin >> idCurso;
+		cout << "Introduzca la ID del ponente: "
+		cin >> idPonente;
+		asigPonente = cu.asignarPonentes(idCurso, idPonente);
+		if(asigPonente) cout << "Se ha asignado el ponente con exito." << endl;
+		else cout << "No se ha podido asignar el ponente." << endl;
+		system("pause");
 		break;
 
 	case 9:	//quitar ponentes
-		Curso::quitarPonentes(idCurso, idPonente);
+		system("cls");
+		cout << "Introduzca la ID del curso: ";
+		cin >> idCurso;
+		cout << "Introduzca la ID del ponente: "
+		cin >> idPonente;
+		quitPonente = cu.quitarPonentes(idCurso, idPonente);
+		if(quitPonente) cout << "Se ha quitado al ponente con exito." << endl;
+		else cout << "No se ha podido quitar el ponente." << endl;
+		system("pause");
 		break;
 
 	case 10://quitar recursos
@@ -58,15 +110,31 @@ void llamada(int op){
 		break;
 
 	case 12://ver mis cursos
-		Curso::verMisCursos(idUsuario);
+		cu.verMisCursos(idUsuario); //falta sacar la lista
 		break;
 
 	case 13://inscribirse a un curso
-		Curso::inscribirAlumno(idCurso, idUsuario);
+		system("cls");
+		cout << "Introduzca la ID del curso: ";
+		cin >> idCurso;
+		cout << "Introduzca la ID del usuario: ";
+		cin >> idUsuario;
+		inscribirAl = cu.inscribirAlumno(idCurso, idUsuario);
+		if(inscribirAl) cout << "Alumno inscrito con exito." << endl;
+		else cout << "No se ha podido inscribir al alumno." << endl;
+		system("pause");
 		break;
 
 	case 14://abandonar inscripcion
-		Curso::borrarInscripcion(idCurso, idUsuario);
+		system("cls");
+		cout << "Introduzca la ID del curso: ";
+		cin >> idCurso;
+		cout << "Introduzca la ID del usuario: ";
+		cin >> idUsuario;
+		borrarIns = cu.borrarInscripcion(idCurso, idUsuario);
+		if(borrarIns) cout << "Alumno borrado con exito." << endl;
+		else cout << "No se ha podido borrar al alumno." << endl;
+		system("pause");
 		break;
 
 	}
@@ -74,6 +142,7 @@ void llamada(int op){
 
 
 int main () {
+	Curso curso;
 	int op_inicio_sesion, usuario, opcion, op_def;
 	string dni, clave, tipo_usuario;
 	do{
@@ -89,7 +158,7 @@ int main () {
 
 
 	if(op_inicio_sesion == 1) {
-		Curso::verMisCursos(0); //CAMBIAR
+		curso.verCursosVigentes(); //FALTA SACAR LA LISTA
 	}
 
 
