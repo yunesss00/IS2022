@@ -17,7 +17,7 @@ class CursoDatos {
 public:
 	CursoDatos();
 	virtual ~CursoDatos();
-
+	bool existeCurso(int idCurso);
 	bool insertar(Curso curso);
 	Curso buscar(int idCurso);
 	std::list<Curso> lectura();
