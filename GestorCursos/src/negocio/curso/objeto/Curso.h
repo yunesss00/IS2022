@@ -140,6 +140,7 @@ public:
 	std::list<Curso> verCursosVigentes();
 	bool asignarPonentes(int idCurso, std::string Ponente);
 	bool quitarPonentes(int idCurso, std::string idPonente);
+	std::list<std::string> verListadoAlumnos(int idCurso);
 
 
 

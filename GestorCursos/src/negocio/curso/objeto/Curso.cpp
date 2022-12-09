@@ -122,4 +122,14 @@ bool Curso::quitarPonentes(int idCurso, std::string idPonente){
 			else return false;
 }
 
+std::list<std::string> Curso::verListadoAlumnos(int idCurso){
+	std::list<std::string> listadoAlumnos;
+	if (cursoDatos.existeCurso(idCurso)) {
+		Curso curso = cursoDatos.buscar(idCurso);
+		listadoAlumnos = curso.getUsuarios();
+	}
+
+	return listadoAlumnos;
+}
+
 
