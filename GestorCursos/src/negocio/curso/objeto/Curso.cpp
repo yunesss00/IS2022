@@ -132,4 +132,24 @@ std::list<std::string> Curso::verListadoAlumnos(int idCurso){
 	return listadoAlumnos;
 }
 
+int Curso::generaEstadistica(int idCurso) {
+	Curso curso;
+	int inscritos;
+	int estadistica;
+	int aforo;
+	if(cursoDatos.existeCurso(idCurso)) {
+		curso = cursoDatos.buscar(idCurso);
+		inscritos = curso.getUsuarios().size();
+		aforo = curso.getAforo();
+		estadistica = inscritos * 100 / aforo;
+	}
+	return estadistica;
+}
+
+
+
+
+
+
+
 
