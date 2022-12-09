@@ -86,6 +86,18 @@ std::list<Curso> Curso::verMisCursos (std::string idUsuario){
 	return listadoMisCursos;
 }
 
+std::list<Curso> Curso::verCursosVigentes (){
+	std::list<Curso> listadoCompletoCursos = cursoDatos.lectura();
+	std::list<Curso> listadoCursosVigentes;
+	bool estado;
+	for (Curso curso: listadoCompletoCursos) {
+		if (curso.isEstado() == true ) {
+			listadoCursosVigentes.push_back(curso);
+		}
+	}
+	return listadoCursosVigentes;
+}
+
 bool Curso::asignarPonentes(int idCurso, std::string idPonente){
 	Curso curso = cursoDatos.buscar(idCurso);
 	std::list<std::string> ponentes = curso.getPonentes();

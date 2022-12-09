@@ -137,6 +137,7 @@ public:
 	bool inscribirAlumno(int idCurso, std::string idUsuario);
 	bool borrarInscripcion(int idCurso, std::string idUsuario);
 	std::list<Curso> verMisCursos(std::string idUsuario);
+	std::list<Curso> verCursosVigentes();
 	bool asignarPonentes(int idCurso, std::string Ponente);
 	bool quitarPonentes(int idCurso, std::string idPonente);
 
