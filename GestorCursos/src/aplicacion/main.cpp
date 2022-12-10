@@ -16,7 +16,7 @@ void llamada(int op, int us){
 	Curso cu;
 	bool cambioClave, editarCurso, darAlta, darBaja, asigPonente, quitPonente, inscribirAl, borrarIns, estadoCurso;
 	string dniUser, claveNueva, idPonente, idUsuario, nombreCurso, descripcionCurso, fechaIni, fechaFin;
-	int estadistica, numAlumnos, aforoCurso, estCurso;
+	int estadistica, numAlumnos, aforoCurso;
 	long idCurso;
 	std::list<string> usuariosCurso;
 	std::list<string> ponentesCurso;
@@ -25,7 +25,7 @@ void llamada(int op, int us){
 		system("cls");
 		cout << "Introduzca su dni: ";
 		cin >> dniUser;
-		cout >> "Introduzca la nueva clave: ";
+		cout << "Introduzca la nueva clave: ";
 		cin >> claveNueva;
 		cambioClave = user.modificarClaveAcceso(dniUser, claveNueva);
 		if (cambioClave) cout << "Se ha cambiado la contraseña con exito." << endl;
@@ -33,26 +33,24 @@ void llamada(int op, int us){
 		system("pause");
 		break;
 
-	case 2: //buscar cursos
+	case 2: {//buscar cursos
 		system("cls");
-		std::list<cu> cursosVigentes;
-		std::list<cu> cursosCompletos;
-		std::list<cu> iterator;
-		std::list<cu> iterator2;
+		std::list<Curso> cursosVigentes;
+		std::list<Curso> cursosCompletos;
+		std::list<Curso>::iterator i;
+		std::list<Curso>::iterator i2;
 		if(us == 0 or us == 2){
 			//mostrar cursos vigentes y no vigentes
 		}else {
 			cursosVigentes = cu.verCursosVigentes();
-			iterator = cursosVigentes.begin();
 			cout<<"Introduzca la ID del curso que quiere buscar: ";
 			cin >> idCurso;
 			system("cls");
-			while(iterator != cursosVigentes.end()){
+			for(i = cursosVigentes.begin();i != cursosVigentes.end();i++){
 				if(cu.getIdCurso() == idCurso){
 					nombreCurso = cu.getNombre();
 					descripcionCurso = cu.getDescripcion();
 					ponentesCurso = cu.getPonentes();
-					iterator2 = ponentesCurso.begin();
 					fechaIni = cu.getFechaInicio();
 					fechaFin = cu.getFechaFinal();
 					aforoCurso = cu.getAforo();
@@ -60,23 +58,21 @@ void llamada(int op, int us){
 					cout << "ID: " << idCurso << endl;
 					cout << "Descripcion: " << descripcionCurso << endl;
 					cout << "Ponentes: ";
-					while(iterator2 != ponentesCurso.end()){
-						cout << "Ponente " << iterator2 << ": " << iterator2.idPonente << endl;
-						iterator2 ++;
+					for(i2 = ponentesCurso.begin(); i2 != ponentesCurso.end(); i2++){
+						cout << "Ponente " << i2 << ": " << i2->getPonentes() << endl;
 					}
 					cout << "Fecha de inicio: " << fechaIni << endl;
 					cout << "Fecha de fin: " << fechaFin << endl;
 					cout << "Aforo: " << aforoCurso << endl;
 
 				}
-				iterator ++;
 			}
 		}
 		system("pause");
 
-		break;
+		break;}
 
-	case 3:	//editar curso
+	case 3:	{//editar curso
 		system("cls");
 		Curso cursoEditado;
 		cout << "Introduzca la nueva ID: ";
@@ -104,43 +100,59 @@ void llamada(int op, int us){
 		if (editarCurso) cout << "Se ha editado el curso con exito." << endl;
 		else cout << "No se ha podido editar el curso." << endl;
 		system("pause");
-		break;
-
-	case 4:	//ver participantes
+		break;}
+	case 4:{	//ver participantes
 		system("cls");
-		std::list<cu> Listado;
-		std::list<cu> iterator3;
+		std::list<Curso> Listado;
+		std::list<Curso>::iterator i3;
 		cout << "Introduzca la ID del curso: ";
 		cin >> idCurso;
 		Listado = cu.verListadoAlumnos(idCurso);
-		iterator3 = Listado.begin();
-		while(iterator3 != Listado.end()){
-			cout << "Alumno " << iterator3 << ": " << iterator3.idUsuario << endl;
-			iterator3 ++;
+		for(i3 = Listado.begin(); i3 != Listado.end(); i3++){
+			cout << "Alumno " << i3 << ": " << i3->getUsuarios() << endl;
 		}
 		system("pause");
-		break;
+		break;}
 
-	case 5: //generar estadisticas
+	case 5:{ //generar estadisticas
 		system("cls");
 		cout << "Introduzca la ID del curso: ";
 		cin >> idCurso;
 		estadistica = cu.generaEstadistica(idCurso);
 		cout << "El porcentaje de ocupacion del curso es de " << estadistica << "%" <<endl;
 		system("pause");
-		break;
+		break;}
 
-	case 6: //dar de alta un curso
+	case 6: {//dar de alta un curso
+		Curso nuevoCurso;
 		system("cls");
 		cout << "Introduzca el nombre del curso: ";
-		cin >> curso;
-		darAlta = cu.darDeAlta(curso);
+		cin >> nombreCurso;
+		cout << "Introduzca la ID del curso: ";
+		cin >> idCurso;
+		cout << "Introduzca la descripcion del curso: ";
+		cin >> descripcionCurso;
+		cout << "Introduzca la fecha de inicio: ";
+		cin >> fechaIni;
+		cout << "Introduzca la fecha de finalizacion: ";
+		cin >> fechaFin;
+		cout << "Introduzca el aforo maximo del curso: ";
+		cin >> aforoCurso;
+		estadoCurso = true;
+		nuevoCurso.setNombre(nombreCurso);
+		nuevoCurso.setIdCurso(idCurso);
+		nuevoCurso.setDescripcion(descripcionCurso);
+		nuevoCurso.setFechaInicio(fechaIni);
+		nuevoCurso.setFechaFinal(fechaFin);
+		nuevoCurso.setAforo(aforoCurso);
+		nuevoCurso.setEstado(estadoCurso);
+		darAlta = cu.darDeAlta(nuevoCurso);
 		if(darAlta) cout << "Curso creado con exito." << endl;
 		else cout << "No se ha podido crear el curso" << endl;
 		system("pause");
-		break;
+		break;}
 
-	case 7:	//dar de baja un curso
+	case 7:	{//dar de baja un curso
 		system("cls");
 		cout << "Introduzca la ID del curso: ";
 		cin >> idCurso;
@@ -148,9 +160,9 @@ void llamada(int op, int us){
 		if (darBaja) cout << "Se ha cambiado el estado del curso con exito." << endl;
 		else cout << "No se ha podido cambiar el estado del curso." << endl;
 		system("pause");
-		break;
+		break;}
 
-	case 8:	//asignar ponentes
+	case 8:	{//asignar ponentes
 		system("cls");
 		cout << "Introduzca la ID del curso: ";
 		cin >> idCurso;
@@ -160,9 +172,9 @@ void llamada(int op, int us){
 		if(asigPonente) cout << "Se ha asignado el ponente con exito." << endl;
 		else cout << "No se ha podido asignar el ponente." << endl;
 		system("pause");
-		break;
+		break;}
 
-	case 9:	//quitar ponentes
+	case 9:	{//quitar ponentes
 		system("cls");
 		cout << "Introduzca la ID del curso: ";
 		cin >> idCurso;
@@ -172,32 +184,30 @@ void llamada(int op, int us){
 		if(quitPonente) cout << "Se ha quitado al ponente con exito." << endl;
 		else cout << "No se ha podido quitar el ponente." << endl;
 		system("pause");
-		break;
+		break;}
 
-	case 10://quitar recursos
+	case 10:{//quitar recursos
 
-		break;
+		break;}
 
-	case 11://asignar recursos
+	case 11:{//asignar recursos
 
-		break;
+		break;}
 
-	case 12://ver mis cursos
+	case 12:{//ver mis cursos
 		system("cls");
-		std::list<cu> listaCursos;
-		std::list<cu> iterator4;
+		std::list<Curso> listaCursos;
+		std::list<Curso>::iterator i4;
 		cout << "Introduzca la ID del usuario: ";
 		cin >> idUsuario;
 		listaCursos = cu.verMisCursos(idUsuario);
-		iterator4 = listaCursos.begin();
-		while(iterator4 != listaCursos.end()){
-			cout<< "Curso " << iterator4 << ": " << iterator4.idCurso << endl;
-			iterator4 ++;
+		for(i4 = listaCursos.begin(); i4 != listaCursos.end(); i4++){
+			cout<< "Curso " << i4 << ": " << i4->getIdCurso() << endl;
 		}
 		system("pause");
-		break;
+		break;}
 
-	case 13://inscribirse a un curso
+	case 13:{//inscribirse a un curso
 		system("cls");
 		cout << "Introduzca la ID del curso: ";
 		cin >> idCurso;
@@ -207,9 +217,9 @@ void llamada(int op, int us){
 		if(inscribirAl) cout << "Alumno inscrito con exito." << endl;
 		else cout << "No se ha podido inscribir al alumno." << endl;
 		system("pause");
-		break;
+		break;}
 
-	case 14://abandonar inscripcion
+	case 14:{//abandonar inscripcion
 		system("cls");
 		cout << "Introduzca la ID del curso: ";
 		cin >> idCurso;
@@ -219,7 +229,7 @@ void llamada(int op, int us){
 		if(borrarIns) cout << "Alumno borrado con exito." << endl;
 		else cout << "No se ha podido borrar al alumno." << endl;
 		system("pause");
-		break;
+		break;}
 
 	}
 }
