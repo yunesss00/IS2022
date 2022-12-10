@@ -53,3 +53,14 @@ bool Usuario::modificarClaveAcceso(std::string dniUsuario, std::string nuevaClav
 	}else return false;
 
 }
+
+std::list<Usuario> Usuario::verParticipantes(int idCurso){
+
+}
+
+
+
+
+
+
+
