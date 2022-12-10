@@ -30,13 +30,12 @@ private:
 	bool estado_ = false;
 	int numeroAlumnos_ = 0;
 	int aforo_ = 0;
-	int estadistica_ =0;
 
 
 
 public:
 	Curso() = default;
-	Curso(int idCurso,std::string nombre,std::string descripcion,std::list<std::string> ponentes, std::list<std::string> usuarios,std::string fechaInicio ,std::string fechaFinal,bool estado,int numeroAlumnos,int aforo, int estadistica){
+	Curso(int idCurso,std::string nombre,std::string descripcion,std::list<std::string> ponentes, std::list<std::string> usuarios,std::string fechaInicio ,std::string fechaFinal,bool estado,int numeroAlumnos,int aforo){
 		idCurso_ = idCurso;
 		nombre_ = nombre;
 		descripcion_ = descripcion;
@@ -47,7 +46,6 @@ public:
 		numeroAlumnos_ = numeroAlumnos;
 		aforo_ = aforo;
 		usuarios_ = usuarios;
-		estadistica_ = estadistica;
 
 	};
 
@@ -133,13 +131,6 @@ public:
 		usuarios_ = usuarios;
 	}
 
-	int getEstadistica() const {
-		return estadistica_;
-	}
-
-	void setEstadistica(int estadistica = 0) {
-		estadistica_ = estadistica;
-	}
 
 	bool darDeAlta(Curso curso);
 	bool darDeBaja(int idCurso);

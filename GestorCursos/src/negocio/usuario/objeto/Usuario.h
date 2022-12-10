@@ -78,7 +78,6 @@ public:
 	bool crearUsuario(Usuario usuario);
 	bool modificarClaveAcceso(std::string dniUsuario, std::string claveAcceso);
 	bool modificarUsuario(Usuario usuario);
-	std::list<Usuario> verParticipantes(int idCurso);
 };
 
 
