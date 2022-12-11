@@ -56,6 +56,8 @@ bool UsuarioDatos::insertar(Usuario usuario){
 	if (!fichero.is_open()) return false;
 	else {
 		fichero<<DNI<<usuario.getDni()<<"\n";
+		std::string string= NOMBRECOMPLETO +usuario.getNombreCompleto();
+
 		fichero<<NOMBRECOMPLETO<<usuario.getNombreCompleto()<<"\n";
 		fichero<<CORREO<<usuario.getCorreo()<<"\n";
 		fichero<<CLAVEACCESO<<usuario.getClaveAcceso()<<"\n";
@@ -79,12 +81,13 @@ bool UsuarioDatos::modificar(Usuario usuario) {
 				ficheroEscritura.open(NOMBRE_FICHERO_AUXILIAR,std::ios::app);
 			}
 			while (getline(ficheroLectura,lineaFichero)) {
-				ficheroEscritura<<lineaFichero<<"\n";
-				if (lineaFichero == usuario.getDni()) {
+				if (lineaFichero == DNI + usuario.getDni()) {
 					getline(ficheroLectura,lineaFichero);
 					getline(ficheroLectura,lineaFichero);
 					getline(ficheroLectura,lineaFichero);
 					getline(ficheroLectura,lineaFichero);
+				}else{
+					ficheroEscritura<<lineaFichero<<"\n";
 				}
 			}
 		}
@@ -105,38 +108,38 @@ Usuario UsuarioDatos::buscar(std::string dni) {
 	if (existeUsuario(dni)){
 		fichero.open(NOMBRE_FICHERO_USUARIOS,std::ios::in);
 		while(getline(fichero, lineaFichero)){
-			if (lineaFichero==dni) {
+			if (lineaFichero==DNI+dni) {
 				usuario.setDni(dni);
 				getline(fichero, lineaFichero);
-				lineaFichero = lineaFichero.substr(lineaFichero.find(":"));
+				lineaFichero = lineaFichero.substr(lineaFichero.find(":")+1);
 				usuario.setNombreCompleto(lineaFichero);
 				getline(fichero, lineaFichero);
-				lineaFichero = lineaFichero.substr(lineaFichero.find(":"));
+				lineaFichero = lineaFichero.substr(lineaFichero.find(":")+1);
 				usuario.setCorreo(lineaFichero);
 				getline(fichero, lineaFichero);
-				lineaFichero = lineaFichero.substr(lineaFichero.find(":"));
+				lineaFichero = lineaFichero.substr(lineaFichero.find(":")+1);
 				usuario.setClaveAcceso(lineaFichero);
 				getline(fichero, lineaFichero);
-				lineaFichero = lineaFichero.substr(lineaFichero.find(":"));
+				lineaFichero = lineaFichero.substr(lineaFichero.find(":")+1);
 				tipoUsuario = TipoUsuario::INCORRECTO;
 				usuario.setTipoUsuario(tipoUsuario);
-				if(lineaFichero =="USUARIO_INVITADO"){
+				if(lineaFichero =="0"){
 					tipoUsuario = TipoUsuario::USUARIO_INVITADO;
 					usuario.setTipoUsuario(tipoUsuario);
 				}
-				if (lineaFichero =="USUARIO_REGISTRADO"){
+				if (lineaFichero =="1"){
 					tipoUsuario = TipoUsuario::USUARIO_REGISTRADO;
 					usuario.setTipoUsuario(tipoUsuario);
 				}
-				if (lineaFichero =="GESTOR_RECURSOS"){
+				if (lineaFichero =="2"){
 					tipoUsuario = TipoUsuario::GESTOR_RECURSOS;
 					usuario.setTipoUsuario(tipoUsuario);
 				}
-				if (lineaFichero =="GESTOR_CURSOS"){
+				if (lineaFichero =="3"){
 					tipoUsuario = TipoUsuario::GESTOR_CURSOS;
 					usuario.setTipoUsuario(tipoUsuario);
 				}
-				if (lineaFichero =="ADMINISTRADOR"){
+				if (lineaFichero == "4"){
 					tipoUsuario = TipoUsuario::ADMINISTRADOR;
 					usuario.setTipoUsuario(tipoUsuario);
 				}

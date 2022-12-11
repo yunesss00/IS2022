@@ -42,7 +42,7 @@ bool Curso::darDeBaja(int idCurso){
 }
 
 bool Curso::editarCurso(Curso curso){
-	if (!cursoDatos.existeCurso(curso.getIdCurso())) {
+	if (cursoDatos.existeCurso(curso.getIdCurso())) {
 		if (cursoDatos.modificar(curso)) return true;
 		else return false;
 	}else return false;
@@ -53,6 +53,8 @@ bool Curso::inscribirAlumno(int idCurso, std::string idUsuario){
 	std::list<std::string> usuarios = curso.getUsuarios();
 	usuarios.push_back(idUsuario);
 	curso.setUsuarios(usuarios);
+	int nAlumnosRefrescado = curso.getNumeroAlumnos() + 1;
+	curso.setNumeroAlumnos(nAlumnosRefrescado);
 
 	if (cursoDatos.modificar(curso)) return true;
 	else return false;
@@ -61,25 +63,26 @@ bool Curso::inscribirAlumno(int idCurso, std::string idUsuario){
 bool Curso::borrarInscripcion(int idCurso, std::string idUsuario) {
 	Curso curso = cursoDatos.buscar(idCurso);
 	std::list<std::string> usuarios = curso.getUsuarios();
-	for (std::string usuario: usuarios) {
-		if (usuario == idUsuario){
-			usuarios.remove(idUsuario);
-		}
-	}
+	usuarios.remove(idUsuario);
+	std::cout<<"break";
 	curso.setUsuarios(usuarios);
+	int nAlumnosRefrescado = curso.getNumeroAlumnos() - 1;
+	curso.setNumeroAlumnos(nAlumnosRefrescado);
 
 	if (cursoDatos.modificar(curso)) return true;
-		else return false;
+	else return false;
 }
 
 std::list<Curso> Curso::verMisCursos (std::string idUsuario){
 	std::list<Curso> listadoCompletoCursos = cursoDatos.lectura();
 	std::list<Curso> listadoMisCursos;
 	for (Curso curso: listadoCompletoCursos) {
-		std::list<std::string> usuarios = curso.getUsuarios();
-		for (std::string usuario:usuarios){
-			if (usuario == idUsuario){
-				listadoMisCursos.push_back(curso);
+		if (curso.isEstado()){
+			std::list<std::string> usuarios = curso.getUsuarios();
+			for (std::string usuario:usuarios){
+				if (usuario == idUsuario){
+					listadoMisCursos.push_back(curso);
+				}
 			}
 		}
 	}
@@ -89,9 +92,8 @@ std::list<Curso> Curso::verMisCursos (std::string idUsuario){
 std::list<Curso> Curso::verCursosVigentes (){
 	std::list<Curso> listadoCompletoCursos = cursoDatos.lectura();
 	std::list<Curso> listadoCursosVigentes;
-	bool estado;
 	for (Curso curso: listadoCompletoCursos) {
-		if (curso.isEstado() == true ) {
+		if (curso.isEstado()) {
 			listadoCursosVigentes.push_back(curso);
 		}
 	}
@@ -110,16 +112,12 @@ bool Curso::asignarPonentes(int idCurso, std::string idPonente){
 
 bool Curso::quitarPonentes(int idCurso, std::string idPonente){
 	Curso curso = cursoDatos.buscar(idCurso);
-		std::list<std::string> ponentes = curso.getUsuarios();
-		for (std::string ponente: ponentes) {
-			if (ponente == idPonente){
-				ponentes.remove(idPonente);
-			}
-		}
-		curso.setPonentes(ponentes);
+	std::list<std::string> ponentes = curso.getPonentes();
+	ponentes.remove(idPonente);
+	curso.setPonentes(ponentes);
 
-		if (cursoDatos.modificar(curso)) return true;
-			else return false;
+	if (cursoDatos.modificar(curso)) return true;
+	else return false;
 }
 
 std::list<std::string> Curso::verListadoAlumnos(int idCurso){
@@ -139,7 +137,7 @@ int Curso::generaEstadistica(int idCurso) {
 	int aforo;
 	if(cursoDatos.existeCurso(idCurso)) {
 		curso = cursoDatos.buscar(idCurso);
-		inscritos = curso.getUsuarios().size();
+		inscritos = curso.getNumeroAlumnos();
 		aforo = curso.getAforo();
 		estadistica = inscritos * 100 / aforo;
 	}

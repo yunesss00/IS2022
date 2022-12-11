@@ -19,13 +19,15 @@ class Usuario {
 
 
 private:
-	std::string dni_ = "";
-	std::string nombreCompleto_= "";
-	std::string correo_ = "";
-	std::string claveAcceso_ = "";
+	std::string dni_ = " ";
+	std::string nombreCompleto_= " ";
+	std::string correo_ = " ";
+	std::string claveAcceso_ = " ";
 	TipoUsuario tipoUsuario_ = TipoUsuario::INCORRECTO;
 public:
-	Usuario() = default;
+	Usuario(){
+		Usuario("","","","",TipoUsuario::INCORRECTO);
+	};
 	Usuario(std::string nombreCompleto, std::string dni, std::string correo,std::string claveAcceso, TipoUsuario tipoUsuario) {
 		nombreCompleto_ = nombreCompleto;
 		dni_ = dni;
