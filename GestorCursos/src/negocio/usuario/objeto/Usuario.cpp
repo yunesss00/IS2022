@@ -37,7 +37,7 @@ bool Usuario::crearUsuario (Usuario usuario){
 }
 
 bool Usuario::modificarUsuario(Usuario usuario) {
-	if (!usuarioDatos.existeUsuario(usuario.getDni())) {
+	if (usuarioDatos.existeUsuario(usuario.getDni())) {
 		if (usuarioDatos.modificar(usuario)) return true;
 		else return false;
 	}else return false;
@@ -45,7 +45,7 @@ bool Usuario::modificarUsuario(Usuario usuario) {
 
 bool Usuario::modificarClaveAcceso(std::string dniUsuario, std::string nuevaClave) {
 	Usuario usuario;
-	if (!usuarioDatos.existeUsuario(dniUsuario)) {
+	if (usuarioDatos.existeUsuario(dniUsuario)) {
 		usuario = usuarioDatos.buscar(dniUsuario);
 		usuario.setClaveAcceso(nuevaClave);
 		if (modificarUsuario(usuario)) return true;
@@ -54,9 +54,6 @@ bool Usuario::modificarClaveAcceso(std::string dniUsuario, std::string nuevaClav
 
 }
 
-std::list<Usuario> Usuario::verParticipantes(int idCurso){
-
-}
 
 
 

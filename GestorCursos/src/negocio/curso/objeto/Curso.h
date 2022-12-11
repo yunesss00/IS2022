@@ -21,20 +21,23 @@ class Curso {
 
 private:
 	long idCurso_ = 0;
-	std::string nombre_ = "";
-	std::string descripcion_ = "";
-	std::list<std::string> ponentes_ = {};
-	std::list<std::string> usuarios_ = {};
-	std::string fechaInicio_ = 0;
-	std::string fechaFinal_ = 0;
-	bool estado_ = false;
-	int numeroAlumnos_ = 0;
-	int aforo_ = 0;
+	std::string nombre_;
+	std::string descripcion_;
+	std::list<std::string> ponentes_;
+	std::list<std::string> usuarios_;
+	std::string fechaInicio_;
+	std::string fechaFinal_;
+	bool estado_;
+	int numeroAlumnos_;
+	int aforo_;
 
 
 
 public:
-	Curso() = default;
+	Curso(){
+		std::list<std::string> lista = {" "};
+		Curso(0," "," ",lista,lista," "," ",false,0,0);
+	};
 	Curso(int idCurso,std::string nombre,std::string descripcion,std::list<std::string> ponentes, std::list<std::string> usuarios,std::string fechaInicio ,std::string fechaFinal,bool estado,int numeroAlumnos,int aforo){
 		idCurso_ = idCurso;
 		nombre_ = nombre;
