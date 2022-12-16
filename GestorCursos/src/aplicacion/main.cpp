@@ -8,6 +8,7 @@
 # include "../negocio/curso/objeto/Curso.h"
 # include "../negocio/usuario/objeto/Usuario.h"
 # include "../negocio/curso/datos/CursoDatos.h"
+# include "../negocio/ponente/objeto/Ponente.h"
 
 using namespace std;
 
@@ -37,8 +38,8 @@ void llamada(int op, int us){
 		system("cls");
 		std::list<Curso> cursosVigentes;
 		std::list<Curso> cursosCompletos;
-		std::list<Curso>::iterator i;
-		std::list<Curso>::iterator i2;
+		std::list<Ponente> ponentes;
+		int cont = 1;
 		if(us == 0 or us == 2){
 			//mostrar cursos vigentes y no vigentes
 		}else {
@@ -46,20 +47,21 @@ void llamada(int op, int us){
 			cout<<"Introduzca la ID del curso que quiere buscar: ";
 			cin >> idCurso;
 			system("cls");
-			for(i = cursosVigentes.begin();i != cursosVigentes.end();i++){
-				if(cu.getIdCurso() == idCurso){
-					nombreCurso = cu.getNombre();
-					descripcionCurso = cu.getDescripcion();
-					ponentesCurso = cu.getPonentes();
-					fechaIni = cu.getFechaInicio();
-					fechaFin = cu.getFechaFinal();
-					aforoCurso = cu.getAforo();
+			for(Curso cur:cursosVigentes){
+				if(cur.getIdCurso() == idCurso){
+					nombreCurso = cur.getNombre();
+					descripcionCurso = cur.getDescripcion();
+					ponentesCurso = cur.getPonentes();
+					fechaIni = cur.getFechaInicio();
+					fechaFin = cur.getFechaFinal();
+					aforoCurso = cur.getAforo();
 					cout << "Nombre: " << nombreCurso << endl;
 					cout << "ID: " << idCurso << endl;
 					cout << "Descripcion: " << descripcionCurso << endl;
 					cout << "Ponentes: ";
-					for(i2 = ponentesCurso.begin(); i2 != ponentesCurso.end(); i2++){
-						cout << "Ponente " << i2 << ": " << i2->getPonentes() << endl;
+					for(Ponente pon:ponentes){
+						cout <<"Ponente "<<cont<<": "<< pon.getNombre() << endl;
+						cont++;
 					}
 					cout << "Fecha de inicio: " << fechaIni << endl;
 					cout << "Fecha de fin: " << fechaFin << endl;
@@ -103,13 +105,16 @@ void llamada(int op, int us){
 		break;}
 	case 4:{	//ver participantes
 		system("cls");
-		std::list<Curso> Listado;
-		std::list<Curso>::iterator i3;
+		std::list<std::string> listado;
+		std::list<Curso> lista;
+		int cont2 = 1;
 		cout << "Introduzca la ID del curso: ";
 		cin >> idCurso;
-		Listado = cu.verListadoAlumnos(idCurso);
-		for(i3 = Listado.begin(); i3 != Listado.end(); i3++){
-			cout << "Alumno " << i3 << ": " << i3->getUsuarios() << endl;
+		listado = cu.verListadoAlumnos(idCurso);
+		//lista = cu.getUsuarios();
+		for(std::string alumno:listado){
+			cout << "Alumno " << cont2 << ": " << alumno << endl;
+			cont2++;
 		}
 		system("pause");
 		break;}
@@ -198,11 +203,13 @@ void llamada(int op, int us){
 		system("cls");
 		std::list<Curso> listaCursos;
 		std::list<Curso>::iterator i4;
+		int cont3 = 1;
 		cout << "Introduzca la ID del usuario: ";
 		cin >> idUsuario;
 		listaCursos = cu.verMisCursos(idUsuario);
-		for(i4 = listaCursos.begin(); i4 != listaCursos.end(); i4++){
-			cout<< "Curso " << i4 << ": " << i4->getIdCurso() << endl;
+		for(Curso list:listaCursos){
+			cout<< "Curso " << cont3 << ": " << list.getIdCurso() << endl;
+			cont3++;
 		}
 		system("pause");
 		break;}
