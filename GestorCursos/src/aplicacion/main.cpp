@@ -111,7 +111,6 @@ void llamada(int op, int us){
 		cout << "Introduzca la ID del curso: ";
 		cin >> idCurso;
 		listado = cu.verListadoAlumnos(idCurso);
-		//lista = cu.getUsuarios();
 		for(std::string alumno:listado){
 			cout << "Alumno " << cont2 << ": " << alumno << endl;
 			cont2++;
@@ -245,12 +244,18 @@ void llamada(int op, int us){
 int main () {
 	Curso curso;
 	Usuario user;
-	int op_inicio_sesion, usuario, opcion, op_def;
+	int op_inicio_sesion, usuario, opcion, op_def, cont3;
 	string dni, clave, tipo_usuario;
+	string nombreCurso, descripcionCurso, fechaIni, fechaFin, aforoCurso
+	std::list<string> ponentesCurso;
+	std::list<Ponente> ponentes;
+	long ID;
 	do{
 		system("cls");
+		cout <<"==============================================="<<endl;
 		cout << "1. Ver cursos como usuario invitado" << endl;
 		cout << "2. Iniciar sesion" << endl;
+		cout <<"==============================================="<<endl;
 		cin >> op_inicio_sesion;
 		if (op_inicio_sesion != 1 and op_inicio_sesion != 2){
 			cout << "Esa no es una opcion valida. Por favor elija de nuevo...";
@@ -260,7 +265,28 @@ int main () {
 
 
 	if(op_inicio_sesion == 1) {
-		curso.verCursosVigentes(); //FALTA SACAR LA LISTA
+		std::list<Curso> cursosVigentes2;
+		cursosVigentes2 = curso.verCursosVigentes();
+		system("cls");
+		for(Curso cur:cursosVigentes2){
+			nombreCurso = cur.getNombre();
+			descripcionCurso = cur.getDescripcion();
+			ponentesCurso = cur.getPonentes();
+			fechaIni = cur.getFechaInicio();
+			fechaFin = cur.getFechaFinal();
+			aforoCurso = cur.getAforo();
+			cout << "Nombre: " << nombreCurso << endl;
+			cout << "ID: " << ID << endl;
+			cout << "Descripcion: " << descripcionCurso << endl;
+			cout << "Ponentes: ";
+			for(Ponente pon:ponentes){
+				cout <<"Ponente "<<cont3<<": "<< pon.getNombre() << endl;
+				cont3++;
+			}
+			cout << "Fecha de inicio: " << fechaIni << endl;
+			cout << "Fecha de fin: " << fechaFin << endl;
+			cout << "Aforo: " << aforoCurso << endl;
+		}
 	}
 
 
@@ -287,6 +313,7 @@ int main () {
 	case 0:
 		do{
 			system("cls");
+			cout <<"==============================================="<<endl;
 			cout << "1. Cambiar contraseña" << endl;
 			cout << "2. Buscar cursos" << endl;
 			cout << "3. Editar curso" << endl;
@@ -298,6 +325,7 @@ int main () {
 			cout << "9. Quitar ponentes de un curso" << endl;
 			cout << "10. Quitar recursos de un curso" << endl;
 			cout << "11. Asignar recursos a un curso" << endl;
+			cout <<"==============================================="<<endl;
 			cin >> opcion;
 			if(opcion<1 or opcion>11) cout << "La opcion elegida no es valida. Vuelva a elegir...";
 			system("pause");
@@ -309,10 +337,12 @@ int main () {
 	case 1:
 		do{
 			system("cls");
+			cout <<"==============================================="<<endl;
 			cout << "1. Cambiar contraseña" << endl;
 			cout << "2. Buscar cursos" << endl;
 			cout << "3. Quitar recursos de un curso" << endl;
 			cout << "4. Asignar recursos a un curso" << endl;
+			cout <<"==============================================="<<endl;
 			cin >> opcion;
 			if(opcion<1 or opcion>4) cout << "La opcion elegida no es valida. Vuelva a elegir...";
 			system("pause");
@@ -325,6 +355,7 @@ int main () {
 	case 2:
 		do{
 			system("cls");
+			cout <<"==============================================="<<endl;
 			cout << "1. Cambiar contraseña" << endl;
 			cout << "2. Buscar cursos" << endl;
 			cout << "3. Editar curso" << endl;
@@ -334,6 +365,7 @@ int main () {
 			cout << "7. Dar de baja un curso" << endl;
 			cout << "8. Asignar ponentes a un curso" << endl;
 			cout << "9. Quitar ponentes de un curso" << endl;
+			cout <<"==============================================="<<endl;
 			cin >> opcion;
 			if(opcion<1 or opcion>9) cout << "La opcion elegida no es valida. Vuelva a elegir...";
 			system("pause");
@@ -345,11 +377,13 @@ int main () {
 	case 3:
 		do{
 			system("cls");
+			cout <<"==============================================="<<endl;
 			cout << "1. Cambiar contraseña" << endl;
 			cout << "2. Buscar cursos" << endl;
 			cout << "3. Ver mis cursos" << endl;
 			cout << "4. Inscribirse a un curso" << endl;
 			cout << "5. Abandonar inscripcion a un curso" <<endl;
+			cout <<"==============================================="<<endl;
 			cin >> opcion;
 			if(opcion<1 or opcion>5) cout << "La opcion elegida no es valida. Vuelva a elegir...";
 			system("pause");
