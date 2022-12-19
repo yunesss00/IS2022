@@ -247,11 +247,13 @@ int main () {
 	Curso curso;
 	Usuario user;
 	int op_inicio_sesion, usuario, opcion, op_def, cont3;
-	string dni, clave, tipo_usuario;
+	string dni, clave;
+	int tipo_usuario;
 	string nombreCurso, descripcionCurso, fechaIni, fechaFin, aforoCurso;
 	std::list<string> ponentesCurso;
 	std::list<Ponente> ponentes;
 	long ID;
+
 	do{
 		system("cls");
 		cout <<"==============================================="<<endl;
@@ -259,8 +261,9 @@ int main () {
 		cout << "2. Iniciar sesion" << endl;
 		cout <<"==============================================="<<endl;
 		cin >> op_inicio_sesion;
+
 		if (op_inicio_sesion != 1 and op_inicio_sesion != 2){
-			cout << "Esa no es una opcion valida. Por favor elija de nuevo...";
+			cout << "Esa no es una opcion valida. Por favor elija de nuevo..."<<endl;
 			system("pause");
 		}
 	} while (op_inicio_sesion != 1 and op_inicio_sesion != 2);
@@ -301,24 +304,18 @@ int main () {
 			cout << "Introduzca su clave: ";
 			cin >> clave;
 			tipo_usuario = user.iniciarSesion(dni, clave);
-			if(tipo_usuario == "INCORRECTO") {
+			if(tipo_usuario == INCORRECTO) {
 				cout << "La contraseña es incorrecta. Intentelo de nuevo." << endl;
 				system("pause");
 			}
 
 		}
-	}while (tipo_usuario == "INCORRECTO");
-
-
-	if(tipo_usuario == "ADMINISTRADOR") usuario = 0;
-	if(tipo_usuario == "GESTOR_RECURSOS") usuario = 1;
-	if(tipo_usuario == "GESTOR_CURSOS") usuario = 2;
-	if(tipo_usuario == "USUARIO_REGISTRADO") usuario = 3;
+	}while (tipo_usuario == INCORRECTO);
 
 
 	opcion = 0;
-	switch(usuario){
-	case 0:
+	switch(tipo_usuario){
+	case ADMINISTRADOR:
 		do{
 			system("cls");
 			cout <<"==============================================="<<endl;
@@ -342,7 +339,7 @@ int main () {
 		llamada(op_def, usuario);
 		break;
 
-	case 1:
+	case GESTOR_RECURSOS:
 		do{
 			system("cls");
 			cout <<"==============================================="<<endl;
@@ -360,7 +357,7 @@ int main () {
 		llamada(op_def, usuario);
 		break;
 
-	case 2:
+	case GESTOR_CURSOS:
 		do{
 			system("cls");
 			cout <<"==============================================="<<endl;
@@ -382,7 +379,7 @@ int main () {
 		llamada(op_def, usuario);
 		break;
 
-	case 3:
+	case USUARIO_REGISTRADO:
 		do{
 			system("cls");
 			cout <<"==============================================="<<endl;
