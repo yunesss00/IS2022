@@ -40,34 +40,31 @@ void llamada(int op, int us){
 		std::list<Curso> cursosCompletos;
 		std::list<Ponente> ponentes;
 		int cont = 1;
-		if(us == 0 or us == 2){
-			//mostrar cursos vigentes y no vigentes
-		}else {
-			cursosVigentes = cu.verCursosVigentes();
-			cout<<"Introduzca la ID del curso que quiere buscar: ";
-			cin >> idCurso;
-			system("cls");
-			for(Curso cur:cursosVigentes){
-				if(cur.getIdCurso() == idCurso){
-					nombreCurso = cur.getNombre();
-					descripcionCurso = cur.getDescripcion();
-					ponentesCurso = cur.getPonentes();
-					fechaIni = cur.getFechaInicio();
-					fechaFin = cur.getFechaFinal();
-					aforoCurso = cur.getAforo();
-					cout << "Nombre: " << nombreCurso << endl;
-					cout << "ID: " << idCurso << endl;
-					cout << "Descripcion: " << descripcionCurso << endl;
-					cout << "Ponentes: ";
-					for(Ponente pon:ponentes){
-						cout <<"Ponente "<<cont<<": "<< pon.getNombre() << endl;
-						cont++;
-					}
-					cout << "Fecha de inicio: " << fechaIni << endl;
-					cout << "Fecha de fin: " << fechaFin << endl;
-					cout << "Aforo: " << aforoCurso << endl;
-
+		if(us == 0 or us == 2) cout<<"Funcion para mostrar cursos no vigentes no implementada."<<endl;
+		cursosVigentes = cu.verCursosVigentes();
+		cout<<"Introduzca la ID del curso que quiere buscar: ";
+		cin >> idCurso;
+		system("cls");
+		for(Curso cur:cursosVigentes){
+			if(cur.getIdCurso() == idCurso){
+				nombreCurso = cur.getNombre();
+				descripcionCurso = cur.getDescripcion();
+				ponentesCurso = cur.getPonentes();
+				fechaIni = cur.getFechaInicio();
+				fechaFin = cur.getFechaFinal();
+				aforoCurso = cur.getAforo();
+				cout << "Nombre: " << nombreCurso << endl;
+				cout << "ID: " << idCurso << endl;
+				cout << "Descripcion: " << descripcionCurso << endl;
+				cout << "Ponentes: ";
+				for(Ponente pon:ponentes){
+					cout <<"Ponente "<<cont<<": "<< pon.getNombre() << endl;
+					cont++;
 				}
+				cout << "Fecha de inicio: " << fechaIni << endl;
+				cout << "Fecha de fin: " << fechaFin << endl;
+				cout << "Aforo: " << aforoCurso << endl;
+
 			}
 		}
 		system("pause");
@@ -191,11 +188,16 @@ void llamada(int op, int us){
 		break;}
 
 	case 10:{//quitar recursos
+		system("cls");
+		cout<<"Funcion no implementada."<<endl;
+		system("pause");
 
 		break;}
 
 	case 11:{//asignar recursos
-
+		system("cls");
+		cout<<"Funcion no implementada."<<endl;
+		system("pause");
 		break;}
 
 	case 12:{//ver mis cursos
@@ -246,7 +248,7 @@ int main () {
 	Usuario user;
 	int op_inicio_sesion, usuario, opcion, op_def, cont3;
 	string dni, clave, tipo_usuario;
-	string nombreCurso, descripcionCurso, fechaIni, fechaFin, aforoCurso
+	string nombreCurso, descripcionCurso, fechaIni, fechaFin, aforoCurso;
 	std::list<string> ponentesCurso;
 	std::list<Ponente> ponentes;
 	long ID;
@@ -269,6 +271,7 @@ int main () {
 		cursosVigentes2 = curso.verCursosVigentes();
 		system("cls");
 		for(Curso cur:cursosVigentes2){
+			ID = cur.getIdCurso();
 			nombreCurso = cur.getNombre();
 			descripcionCurso = cur.getDescripcion();
 			ponentesCurso = cur.getPonentes();
@@ -292,12 +295,17 @@ int main () {
 
 	do{
 		if(op_inicio_sesion == 2){
+			system("cls");
 			cout << "Introduzca su dni: ";
 			cin >> dni;
 			cout << "Introduzca su clave: ";
 			cin >> clave;
 			tipo_usuario = user.iniciarSesion(dni, clave);
-			if(tipo_usuario == "INCORRECTO") cout << "La contraseña es incorrecta. Intentelo de nuevo." << endl;
+			if(tipo_usuario == "INCORRECTO") {
+				cout << "La contraseña es incorrecta. Intentelo de nuevo." << endl;
+				system("pause");
+			}
+
 		}
 	}while (tipo_usuario == "INCORRECTO");
 
