@@ -167,7 +167,6 @@ void llamada(int op, int us){
 
 	case 6: {//dar de alta un curso
 		Curso nuevoCurso;
-		std::list<Curso> cursosVigentes;
 		system("cls");
 		cout << "Introduzca el nombre del curso: ";
 		cin.ignore();
@@ -244,7 +243,7 @@ void llamada(int op, int us){
 		int c = 1;
 		std::list<Curso> cursosVigentes;
 		cursosVigentes = cu.verCursosVigentes();
-		cout<<"Cursos disponibles para la búsqueda(ID): "<< endl;
+		cout<<"Cursos disponibles(ID): "<< endl;
 		for(Curso cur:cursosVigentes){
 			idCurso = cur.getIdCurso();
 			cout << "Curso " << c << ": " << idCurso << endl;
@@ -276,7 +275,6 @@ void llamada(int op, int us){
 	case 12:{//ver mis cursos
 		system("cls");
 		std::list<Curso> listaCursos;
-		std::list<Curso>::iterator i4;
 		int cont3 = 1;
 		cout << "Introduzca la ID del usuario: ";
 		cin >> idUsuario;
@@ -291,6 +289,15 @@ void llamada(int op, int us){
 
 	case 13:{//inscribirse a un curso
 		system("cls");
+		int c = 1;
+		std::list<Curso> cursosVigentes;
+		cursosVigentes = cu.verCursosVigentes();
+		cout<<"Cursos disponibles(ID): "<< endl;
+		for(Curso cur:cursosVigentes){
+			idCurso = cur.getIdCurso();
+			cout << "Curso " << c << ": " << idCurso << endl;
+			c++;
+		}
 		cout << "Introduzca la ID del curso: ";
 		cin >> idCurso;
 		cout << "Introduzca la ID del usuario: ";
