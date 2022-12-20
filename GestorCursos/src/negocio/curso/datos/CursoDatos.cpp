@@ -75,7 +75,7 @@ bool CursoDatos::insertar(Curso curso){
 		std::list<std::string> usuarios = curso.getUsuarios();
 
 		if (ponentes.empty()){
-			fichero<<PONENTES<<"[]";
+			fichero<<PONENTES<<"[]\n";
 		}else{
 			fichero<<PONENTES<<"[";
 			for(std::string ponente: ponentes){
@@ -84,7 +84,7 @@ bool CursoDatos::insertar(Curso curso){
 			fichero<<"]\n";
 		}
 		if (usuarios.empty()){
-			fichero<<USUARIOS<<"[]";
+			fichero<<USUARIOS<<"[]\n";
 		}else{
 			fichero<<USUARIOS<<"[";
 			for(std::string usuario: usuarios){

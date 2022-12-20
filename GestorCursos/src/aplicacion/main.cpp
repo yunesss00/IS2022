@@ -1,8 +1,8 @@
-#include <iostream>
+# include <iostream>
 # include <string>
 # include <ctime>
-# include <iostream>
 # include <cstdlib>
+# include <conio.h>
 # include <cstdio>
 # include <list>
 # include "../negocio/curso/objeto/Curso.h"
@@ -39,53 +39,77 @@ void llamada(int op, int us){
 		std::list<Curso> cursosVigentes;
 		std::list<Curso> cursosCompletos;
 		std::list<Ponente> ponentes;
-		int cont = 1;
-		if(us == 0 or us == 2) cout<<"Funcion para mostrar cursos no vigentes no implementada."<<endl;
+		int cont = 1, c=1;
+		bool valido = false;
+		if(us == ADMINISTRADOR or us == GESTOR_CURSOS) cout<<"Funcion para mostrar cursos no vigentes no implementada."<<endl;
 		cursosVigentes = cu.verCursosVigentes();
-		cout<<"Introduzca la ID del curso que quiere buscar: ";
-		cin >> idCurso;
-		system("cls");
-		for(Curso cur:cursosVigentes){
-			if(cur.getIdCurso() == idCurso){
-				nombreCurso = cur.getNombre();
-				descripcionCurso = cur.getDescripcion();
-				ponentesCurso = cur.getPonentes();
-				fechaIni = cur.getFechaInicio();
-				fechaFin = cur.getFechaFinal();
-				aforoCurso = cur.getAforo();
-				cout << "Nombre: " << nombreCurso << endl;
-				cout << "ID: " << idCurso << endl;
-				cout << "Descripcion: " << descripcionCurso << endl;
-				cout << "Ponentes: ";
-				for(Ponente pon:ponentes){
-					cout <<"Ponente "<<cont<<": "<< pon.getNombre() << endl;
-					cont++;
-				}
-				cout << "Fecha de inicio: " << fechaIni << endl;
-				cout << "Fecha de fin: " << fechaFin << endl;
-				cout << "Aforo: " << aforoCurso << endl;
-
+		do{
+			c = 1;
+			cont = 1;
+			system("cls");
+			cout<<"Cursos disponibles para la búsqueda(ID): "<< endl;
+			for(Curso cur:cursosVigentes){
+				idCurso = cur.getIdCurso();
+				cout << "Curso " << c << ": " << idCurso << endl;
+				c++;
 			}
-		}
-		system("pause");
+			cout<<"Introduzca la ID del curso que quiere buscar: ";
+			cin >> idCurso;
+			system("cls");
+			for(Curso cur:cursosVigentes){
+				if(cur.getIdCurso() == idCurso){
+					valido = true;
+					nombreCurso = cur.getNombre();
+					descripcionCurso = cur.getDescripcion();
+					ponentesCurso = cur.getPonentes();
+					fechaIni = cur.getFechaInicio();
+					fechaFin = cur.getFechaFinal();
+					aforoCurso = cur.getAforo();
+					cout << "Nombre: " << nombreCurso << endl;
+					cout << "ID: " << idCurso << endl;
+					cout << "Descripcion: " << descripcionCurso << endl;
+					for(string ponentes:ponentesCurso){
+						cout <<"Ponente "<<cont<<": "<< ponentes << endl;
+						cont++;
+					}
+					cout << "Fecha de inicio: " << fechaIni << endl;
+					cout << "Fecha de fin: " << fechaFin << endl;
+					cout << "Aforo: " << aforoCurso << endl;
+
+				}
+			}
+			if(valido == false) cout << "No se ha encontrado un curso con esa ID. " << endl;
+			system("pause");
+		}while(valido == false);
 
 		break;}
 
 	case 3:	{//editar curso
 		system("cls");
 		Curso cursoEditado;
-		cout << "Introduzca la nueva ID: ";
+		std::list<Curso> cursosVigentes;
+		cursosVigentes = cu.verCursosVigentes();
+		int c = 1;
+		cout<<"Cursos disponibles para editar(ID): "<< endl;
+		for(Curso cur:cursosVigentes){
+			idCurso = cur.getIdCurso();
+			cout << "Curso " << c << ": " << idCurso << endl;
+			c++;
+		}
+		cout<<"Introduzca la ID del curso que quiere editar: ";
 		cin >> idCurso;
+		cin.ignore();
 		cout << "Introduzca el nuevo nombre: ";
-		cin >> nombreCurso;
+		getline(cin, nombreCurso);
 		cout << "Introduzca la nueva descripcion: ";
-		cin >> descripcionCurso;
+		getline(cin, descripcionCurso);
 		cout << "Introduzca el nuevo numero de alumnos: ";
 		cin >> numAlumnos;
+		cin.ignore();
 		cout << "Introduzca la nueva fecha de inicio: ";
-		cin >> fechaIni;
+		getline(cin, fechaIni);
 		cout << "Introduzca la nueva fecha de finalizacion: ";
-		cin >> fechaFin;
+		getline(cin, fechaFin);
 		cout << "Introduzca el nuevo aforo: ";
 		cin >> aforoCurso;
 		cursoEditado.setIdCurso(idCurso);
@@ -104,7 +128,15 @@ void llamada(int op, int us){
 		system("cls");
 		std::list<std::string> listado;
 		std::list<Curso> lista;
-		int cont2 = 1;
+		std::list<Curso> cursosVigentes;
+		cursosVigentes = cu.verCursosVigentes();
+		int cont2 = 1, c = 1;
+		cout<<"Cursos disponibles para la búsqueda(ID): "<< endl;
+		for(Curso cur:cursosVigentes){
+			idCurso = cur.getIdCurso();
+			cout << "Curso " << c << ": " << idCurso << endl;
+			c++;
+		}
 		cout << "Introduzca la ID del curso: ";
 		cin >> idCurso;
 		listado = cu.verListadoAlumnos(idCurso);
@@ -117,6 +149,15 @@ void llamada(int op, int us){
 
 	case 5:{ //generar estadisticas
 		system("cls");
+		int c = 1;
+		std::list<Curso> cursosVigentes;
+		cursosVigentes = cu.verCursosVigentes();
+		cout<<"Cursos disponibles para la búsqueda(ID): "<< endl;
+		for(Curso cur:cursosVigentes){
+			idCurso = cur.getIdCurso();
+			cout << "Curso " << c << ": " << idCurso << endl;
+			c++;
+		}
 		cout << "Introduzca la ID del curso: ";
 		cin >> idCurso;
 		estadistica = cu.generaEstadistica(idCurso);
@@ -126,20 +167,25 @@ void llamada(int op, int us){
 
 	case 6: {//dar de alta un curso
 		Curso nuevoCurso;
+		std::list<Curso> cursosVigentes;
 		system("cls");
 		cout << "Introduzca el nombre del curso: ";
-		cin >> nombreCurso;
+		cin.ignore();
+		getline(cin, nombreCurso);
 		cout << "Introduzca la ID del curso: ";
 		cin >> idCurso;
+		cin.ignore();
 		cout << "Introduzca la descripcion del curso: ";
-		cin >> descripcionCurso;
+		getline(cin, descripcionCurso);
 		cout << "Introduzca la fecha de inicio: ";
-		cin >> fechaIni;
+		getline(cin, fechaIni);
 		cout << "Introduzca la fecha de finalizacion: ";
-		cin >> fechaFin;
+		getline(cin, fechaFin);
+		//cin.ignore();
 		cout << "Introduzca el aforo maximo del curso: ";
 		cin >> aforoCurso;
 		estadoCurso = true;
+		nuevoCurso.setNumeroAlumnos(0);
 		nuevoCurso.setNombre(nombreCurso);
 		nuevoCurso.setIdCurso(idCurso);
 		nuevoCurso.setDescripcion(descripcionCurso);
@@ -149,12 +195,21 @@ void llamada(int op, int us){
 		nuevoCurso.setEstado(estadoCurso);
 		darAlta = cu.darDeAlta(nuevoCurso);
 		if(darAlta) cout << "Curso creado con exito." << endl;
-		else cout << "No se ha podido crear el curso" << endl;
+		else cout << "No se ha podido crear el curso. Ya existe un curso con esa ID" << endl;
 		system("pause");
 		break;}
 
 	case 7:	{//dar de baja un curso
 		system("cls");
+		std::list<Curso> cursosVigentes;
+		int c = 1;
+		cursosVigentes = cu.verCursosVigentes();
+		cout<<"Cursos disponibles para la búsqueda(ID): "<< endl;
+		for(Curso cur:cursosVigentes){
+			idCurso = cur.getIdCurso();
+			cout << "Curso " << c << ": " << idCurso << endl;
+			c++;
+		}
 		cout << "Introduzca la ID del curso: ";
 		cin >> idCurso;
 		darBaja = cu.darDeBaja(idCurso);
@@ -165,6 +220,15 @@ void llamada(int op, int us){
 
 	case 8:	{//asignar ponentes
 		system("cls");
+		int c = 1;
+		std::list<Curso> cursosVigentes;
+		cursosVigentes = cu.verCursosVigentes();
+		cout<<"Cursos disponibles (ID): "<< endl;
+		for(Curso cur:cursosVigentes){
+			idCurso = cur.getIdCurso();
+			cout << "Curso " << c << ": " << idCurso << endl;
+			c++;
+		}
 		cout << "Introduzca la ID del curso: ";
 		cin >> idCurso;
 		cout << "Introduzca la ID del ponente: ";
@@ -177,6 +241,15 @@ void llamada(int op, int us){
 
 	case 9:	{//quitar ponentes
 		system("cls");
+		int c = 1;
+		std::list<Curso> cursosVigentes;
+		cursosVigentes = cu.verCursosVigentes();
+		cout<<"Cursos disponibles para la búsqueda(ID): "<< endl;
+		for(Curso cur:cursosVigentes){
+			idCurso = cur.getIdCurso();
+			cout << "Curso " << c << ": " << idCurso << endl;
+			c++;
+		}
 		cout << "Introduzca la ID del curso: ";
 		cin >> idCurso;
 		cout << "Introduzca la ID del ponente: ";
@@ -208,6 +281,7 @@ void llamada(int op, int us){
 		cout << "Introduzca la ID del usuario: ";
 		cin >> idUsuario;
 		listaCursos = cu.verMisCursos(idUsuario);
+		cout<<"Lista de cursos del usuario: "<<endl;
 		for(Curso list:listaCursos){
 			cout<< "Curso " << cont3 << ": " << list.getIdCurso() << endl;
 			cont3++;
@@ -243,10 +317,121 @@ void llamada(int op, int us){
 }
 
 
+
+
+void menus(int usuario){
+	int opcion = 0;
+	int op_def;
+	do{
+		switch(usuario){
+		case ADMINISTRADOR:
+			do{
+				system("cls");
+				cout <<"==============================================="<<endl;
+				cout << "0. Cerrar sesion" << endl;
+				cout << "1. Cambiar contraseña" << endl;
+				cout << "2. Buscar cursos" << endl;
+				cout << "3. Editar curso" << endl;
+				cout << "4. Ver participantes de un curso" << endl;
+				cout << "5. Generar estadísticas de un curso" << endl;
+				cout << "6. Dar de alta un curso" << endl;
+				cout << "7. Dar de baja un curso" << endl;
+				cout << "8. Asignar ponentes a un curso" << endl;
+				cout << "9. Quitar ponentes de un curso" << endl;
+				cout << "10. Quitar recursos de un curso" << endl;
+				cout << "11. Asignar recursos a un curso" << endl;
+				cout <<"==============================================="<<endl;
+				cin >> opcion;
+				if(opcion<0 or opcion>11){
+					cout << "La opcion elegida no es valida. Vuelva a elegir...";
+					system("pause");
+				}
+			}while(opcion<0 or opcion>11);
+			op_def = opcion;
+			llamada(op_def, usuario);
+			break;
+
+		case GESTOR_RECURSOS:
+			do{
+				system("cls");
+				cout <<"==============================================="<<endl;
+				cout << "0. Cerrar sesion" << endl;
+				cout << "1. Cambiar contraseña" << endl;
+				cout << "2. Buscar cursos" << endl;
+				cout << "3. Quitar recursos de un curso" << endl;
+				cout << "4. Asignar recursos a un curso" << endl;
+				cout <<"==============================================="<<endl;
+				cin >> opcion;
+				if(opcion<0 or opcion>4) {
+					cout << "La opcion elegida no es valida. Vuelva a elegir...";
+					system("pause");
+				}
+			}while(opcion<0 or opcion>4);
+			if(opcion<=2) op_def = opcion;
+			else op_def = opcion + 7;
+			llamada(op_def, usuario);
+			break;
+
+		case GESTOR_CURSOS:
+			do{
+				system("cls");
+				cout <<"==============================================="<<endl;
+				cout << "0. Cerrar sesion" << endl;
+				cout << "1. Cambiar contraseña" << endl;
+				cout << "2. Buscar cursos" << endl;
+				cout << "3. Editar curso" << endl;
+				cout << "4. Ver participantes de un curso" << endl;
+				cout << "5. Generar estadísticas de un curso" << endl;
+				cout << "6. Dar de alta un curso" << endl;
+				cout << "7. Dar de baja un curso" << endl;
+				cout << "8. Asignar ponentes a un curso" << endl;
+				cout << "9. Quitar ponentes de un curso" << endl;
+				cout <<"==============================================="<<endl;
+				cin >> opcion;
+				if(opcion<0 or opcion>9){
+					cout << "La opcion elegida no es valida. Vuelva a elegir...";
+					system("pause");
+				}
+			}while(opcion<0 or opcion>9);
+			op_def = opcion;
+			llamada(op_def, usuario);
+			break;
+
+		case USUARIO_REGISTRADO:
+			do{
+				system("cls");
+				cout <<"==============================================="<<endl;
+				cout << "0. Cerrar sesion" << endl;
+				cout << "1. Cambiar contraseña" << endl;
+				cout << "2. Buscar cursos" << endl;
+				cout << "3. Ver mis cursos" << endl;
+				cout << "4. Inscribirse a un curso" << endl;
+				cout << "5. Abandonar inscripcion a un curso" <<endl;
+				cout <<"==============================================="<<endl;
+				cin >> opcion;
+				if(opcion<0 or opcion>5){
+					cout << "La opcion elegida no es valida. Vuelva a elegir...";
+					system("pause");
+				}
+			}while(opcion<0 or opcion>5);
+			if(opcion<=2) op_def = opcion;
+			else op_def = opcion + 9;
+			llamada(op_def, usuario);
+			break;
+		}
+	}while(opcion != 0);
+
+}
+
+
+
+
+
+
 int main () {
 	Curso curso;
 	Usuario user;
-	int op_inicio_sesion, usuario, opcion, op_def, cont3;
+	int op_inicio_sesion, cont3;
 	string dni, clave;
 	int tipo_usuario;
 	string nombreCurso, descripcionCurso, fechaIni, fechaFin, aforoCurso;
@@ -259,145 +444,69 @@ int main () {
 		cout <<"==============================================="<<endl;
 		cout << "1. Ver cursos como usuario invitado" << endl;
 		cout << "2. Iniciar sesion" << endl;
+		cout << "3. Salir" << endl;
 		cout <<"==============================================="<<endl;
 		cin >> op_inicio_sesion;
+		switch(op_inicio_sesion){
+		case 1:{
+			std::list<Curso> cursosVigentes2;
+			cursosVigentes2 = curso.verCursosVigentes();
+			system("cls");
+			for(Curso cur:cursosVigentes2){
+				cont3 = 1;
+				ID = cur.getIdCurso();
+				nombreCurso = cur.getNombre();
+				descripcionCurso = cur.getDescripcion();
+				ponentesCurso = cur.getPonentes();
+				fechaIni = cur.getFechaInicio();
+				fechaFin = cur.getFechaFinal();
+				aforoCurso = cur.getAforo();
+				cout << "Nombre: " << nombreCurso << endl;
+				cout << "ID: " << ID << endl;
+				cout << "Descripcion: " << descripcionCurso << endl;
+				for(string ponentes:ponentesCurso){
+					cout <<"Ponente "<<cont3<<": "<< ponentes << endl;
+					cont3++;
+				}
+				cout << "Fecha de inicio: " << fechaIni << endl;
+				cout << "Fecha de fin: " << fechaFin << endl;
+				cout << "Aforo: " << aforoCurso << endl;
+				cout << "===============================" << endl;
+			}
+			system("pause");
+			break;}
 
-		if (op_inicio_sesion != 1 and op_inicio_sesion != 2){
+		case 2:{
+			do{
+				system("cls");
+				cout << "Introduzca su dni: ";
+				cin >> dni;
+				cout << "Introduzca su clave: ";
+				cin >> clave;
+				tipo_usuario = user.iniciarSesion(dni, clave);
+				if(tipo_usuario == INCORRECTO) {
+					cout << "La contraseña o el dni son incorrectos. Intentelo de nuevo." << endl;
+					system("pause");
+				}
+			}while (tipo_usuario == INCORRECTO);
+			menus(tipo_usuario);
+			break;}
+
+		case 3:{
+			system("cls");
+			cout<<"Hasta la proxima"<<endl;
+			system("pause");
+			break;}
+
+		default:{
+			system("cls");
 			cout << "Esa no es una opcion valida. Por favor elija de nuevo..."<<endl;
 			system("pause");
-		}
-	} while (op_inicio_sesion != 1 and op_inicio_sesion != 2);
-
-
-	if(op_inicio_sesion == 1) {
-		std::list<Curso> cursosVigentes2;
-		cursosVigentes2 = curso.verCursosVigentes();
-		system("cls");
-		for(Curso cur:cursosVigentes2){
-			ID = cur.getIdCurso();
-			nombreCurso = cur.getNombre();
-			descripcionCurso = cur.getDescripcion();
-			ponentesCurso = cur.getPonentes();
-			fechaIni = cur.getFechaInicio();
-			fechaFin = cur.getFechaFinal();
-			aforoCurso = cur.getAforo();
-			cout << "Nombre: " << nombreCurso << endl;
-			cout << "ID: " << ID << endl;
-			cout << "Descripcion: " << descripcionCurso << endl;
-			cout << "Ponentes: ";
-			for(Ponente pon:ponentes){
-				cout <<"Ponente "<<cont3<<": "<< pon.getNombre() << endl;
-				cont3++;
-			}
-			cout << "Fecha de inicio: " << fechaIni << endl;
-			cout << "Fecha de fin: " << fechaFin << endl;
-			cout << "Aforo: " << aforoCurso << endl;
-		}
-	}
-
-
-	do{
-		if(op_inicio_sesion == 2){
-			system("cls");
-			cout << "Introduzca su dni: ";
-			cin >> dni;
-			cout << "Introduzca su clave: ";
-			cin >> clave;
-			tipo_usuario = user.iniciarSesion(dni, clave);
-			if(tipo_usuario == INCORRECTO) {
-				cout << "La contraseña es incorrecta. Intentelo de nuevo." << endl;
-				system("pause");
-			}
+			break;}
 
 		}
-	}while (tipo_usuario == INCORRECTO);
 
-
-	opcion = 0;
-	switch(tipo_usuario){
-	case ADMINISTRADOR:
-		do{
-			system("cls");
-			cout <<"==============================================="<<endl;
-			cout << "1. Cambiar contraseña" << endl;
-			cout << "2. Buscar cursos" << endl;
-			cout << "3. Editar curso" << endl;
-			cout << "4. Ver participantes de un curso" << endl;
-			cout << "5. Generar estadísticas de un curso" << endl;
-			cout << "6. Dar de alta un curso" << endl;
-			cout << "7. Dar de baja un curso" << endl;
-			cout << "8. Asignar ponentes a un curso" << endl;
-			cout << "9. Quitar ponentes de un curso" << endl;
-			cout << "10. Quitar recursos de un curso" << endl;
-			cout << "11. Asignar recursos a un curso" << endl;
-			cout <<"==============================================="<<endl;
-			cin >> opcion;
-			if(opcion<1 or opcion>11) cout << "La opcion elegida no es valida. Vuelva a elegir...";
-			system("pause");
-		}while(opcion<1 or opcion>11);
-		op_def = opcion;
-		llamada(op_def, usuario);
-		break;
-
-	case GESTOR_RECURSOS:
-		do{
-			system("cls");
-			cout <<"==============================================="<<endl;
-			cout << "1. Cambiar contraseña" << endl;
-			cout << "2. Buscar cursos" << endl;
-			cout << "3. Quitar recursos de un curso" << endl;
-			cout << "4. Asignar recursos a un curso" << endl;
-			cout <<"==============================================="<<endl;
-			cin >> opcion;
-			if(opcion<1 or opcion>4) cout << "La opcion elegida no es valida. Vuelva a elegir...";
-			system("pause");
-		}while(opcion<1 or opcion>4);
-		if(opcion == 1 or opcion == 2) op_def = opcion;
-		else op_def = opcion + 7;
-		llamada(op_def, usuario);
-		break;
-
-	case GESTOR_CURSOS:
-		do{
-			system("cls");
-			cout <<"==============================================="<<endl;
-			cout << "1. Cambiar contraseña" << endl;
-			cout << "2. Buscar cursos" << endl;
-			cout << "3. Editar curso" << endl;
-			cout << "4. Ver participantes de un curso" << endl;
-			cout << "5. Generar estadísticas de un curso" << endl;
-			cout << "6. Dar de alta un curso" << endl;
-			cout << "7. Dar de baja un curso" << endl;
-			cout << "8. Asignar ponentes a un curso" << endl;
-			cout << "9. Quitar ponentes de un curso" << endl;
-			cout <<"==============================================="<<endl;
-			cin >> opcion;
-			if(opcion<1 or opcion>9) cout << "La opcion elegida no es valida. Vuelva a elegir...";
-			system("pause");
-		}while(opcion<1 or opcion>9);
-		op_def = opcion;
-		llamada(op_def, usuario);
-		break;
-
-	case USUARIO_REGISTRADO:
-		do{
-			system("cls");
-			cout <<"==============================================="<<endl;
-			cout << "1. Cambiar contraseña" << endl;
-			cout << "2. Buscar cursos" << endl;
-			cout << "3. Ver mis cursos" << endl;
-			cout << "4. Inscribirse a un curso" << endl;
-			cout << "5. Abandonar inscripcion a un curso" <<endl;
-			cout <<"==============================================="<<endl;
-			cin >> opcion;
-			if(opcion<1 or opcion>5) cout << "La opcion elegida no es valida. Vuelva a elegir...";
-			system("pause");
-		}while(opcion<1 or opcion>5);
-		if(opcion == 1 or opcion == 2) op_def = opcion;
-		else op_def = opcion + 9;
-		llamada(op_def, usuario);
-		break;
-	}
+	}while (op_inicio_sesion !=3);
 
 return 0;
 }
